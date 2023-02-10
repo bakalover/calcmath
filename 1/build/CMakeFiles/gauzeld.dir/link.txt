@@ -1,0 +1,1 @@
+/usr/bin/g++ -g CMakeFiles/gauzeld.dir/src/main.cpp.o CMakeFiles/gauzeld.dir/src/util.cpp.o -o gauzeld 
