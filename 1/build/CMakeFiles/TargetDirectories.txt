@@ -1,3 +1,0 @@
-/home/bakalover/code/calcmath/1/build/CMakeFiles/gauzeld.dir
-/home/bakalover/code/calcmath/1/build/CMakeFiles/edit_cache.dir
-/home/bakalover/code/calcmath/1/build/CMakeFiles/rebuild_cache.dir
