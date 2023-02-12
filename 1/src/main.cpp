@@ -2,25 +2,71 @@
 #include <vector>
 #include "../include/util.h"
 #include <iomanip>
+#include <fstream>
 using namespace std;
 
 int main(){
-    int32_t n;
-    cin>>n;
     cout<<setprecision(15)<<fixed;
-    vector<vector<double>> A (n+1,vector<double> (n+1)), C (n+1,vector<double> (n+1));
-    vector<double> B(n+1), d(n+1);
-    for (size_t i = 1; i <= n; i++)
-    {
-        for (size_t j = 1; j <= n; j++)
-        {
-            cin>>A[i][j];
+    int32_t n;
+    int64_t eps;
+    ifstream in;
+
+    cout<<"Choose configuration: \n1 - console \n2 - file\n"<<endl;
+    int16_t conf;
+    cin>>conf;
+    if(conf==2){
+        cout<<"Enter path: ";
+
+        string path;
+        cin>>path;
+
+        in.open(path);
+        if(in.is_open()){
+            in>>n;
+        }
+        else{
+            cout<<"Wrong file"<<endl;;
+            return 0;
         }
     }
-    
-    for (size_t i = 1; i <= n; i++)
-    {
-        cin>>B[i];
+    else{
+        cout<<"\nDemensions: ";
+        cin>>n;
+    }
+
+    vector<vector<double>> A (n+1,vector<double> (n+1)), C (n+1,vector<double> (n+1));
+    vector<double> B(n+1), d(n+1);
+
+    if(conf==2){
+        for (size_t i = 1; i <= n; i++)
+        {
+            for (size_t j = 1; j <= n; j++)
+            {
+                in>>A[i][j];
+            }
+        }
+        for (size_t i = 1; i <= n; i++)
+        {
+            in>>B[i];
+        }
+        in>>eps;
+    }
+    else{
+        cout<<"\nMatrix: "<<endl;;
+        for (size_t i = 1; i <= n; i++)
+        {
+            for (size_t j = 1; j <= n; j++)
+            {
+                cin>>A[i][j];
+            }
+        }
+        cout<<"\nVector: "<<endl;
+        for (size_t i = 1; i <= n; i++)
+        {
+            cin>>B[i];
+        }
+        cout<<"\nPrecision: ";
+        cin>>eps;
     }
 
     if(!check_diag(A,B)){
@@ -46,7 +92,7 @@ int main(){
     
     vector<double> x(d);
     
-    int32_t iter_count = solve(C,x,d);
+    int32_t iter_count = solve(C,x,d,eps);
 
     cout<<"Iterations: "<<iter_count<<'\n'<<'\n'<<"Answer: "<<endl;
     for (size_t i = 1; i < x.size(); i++)

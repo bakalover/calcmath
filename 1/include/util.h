@@ -6,6 +6,6 @@
 #include<cinttypes>
 
 using namespace std;
-int32_t solve(const vector<vector<double>>& C, vector<double>& x,const vector<double>& d);
+int32_t solve(const vector<vector<double>>& C, vector<double>& x,const vector<double>& d, const int64_t eps);
 bool check_diag(vector<vector<double>>& A, vector<double>& b);
 #endif
