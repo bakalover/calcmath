@@ -1,5 +1,23 @@
-#include "../include/util.h"
+#include "../include/util.hpp"
 #include <cmath>
+string pretty(double x, const int64_t eps){
+    ostringstream strs;
+    strs << scientific << setprecision(100) << x;
+    string s =  strs.str(); // Просто циклом посчитать нули после этой строчки
+    string mantis = s.substr(0,1) + s.substr(2,eps);
+    int16_t exp = stoi(s.substr(s.size()-2,2)) - 1;
+    if (exp >= 0){
+        for (size_t i = 0; i < exp; i++)
+        {
+            mantis = "0"+mantis;
+        }
+        return "0." + mantis;
+    }
+    else{
+        return mantis.substr(0,1) + "." + mantis.substr(1, mantis.size()-1);
+    }
+}
+
 bool check_ans(const vector<double>& x_k, const vector<double>& x_k_1, const double eps, vector<double>& err){
     double max_cur_err{};
     for (size_t i = 1; i <= x_k.size()-1; i++)
@@ -43,7 +61,8 @@ int32_t solve(const vector<vector<double>>& C, vector<double>& x,const vector<do
     }
     cout<<"\nERR: "<<endl;
     for(size_t i = 1; i< err.size();++i){
-        cout<<err[i]<<endl;
+        //cout<<err[i]<<endl;
+        cout << pretty(err[i], eps) << endl;
     }
     cout<<'\n';
     return ++iter_count;
@@ -56,6 +75,7 @@ bool check_diag(vector<vector<double>>& A, vector<double>& b){
 
     for (size_t i = 1; i < A.size(); i++)
     {
+        bool check_row = false;
         double sum{};
         for (size_t j = 1; j < A.size(); j++)
         {
@@ -64,12 +84,13 @@ bool check_diag(vector<vector<double>>& A, vector<double>& b){
         
         for (size_t j = 1; j < A.size(); j++)
         {
-            if(A[i][j] >= sum - A[i][j]){
-                if(A[i][j] > sum - A[i][j]) {strict = true;}
-                indexes[j] = i; // j-й элемент в i-й строке - нужный -> j-ой строкой будет i-я строка
+            if(A[i][j] >= sum - A[i][j]){                    //Если такой элемент существует -> он , ((очевидно)), единственнен 
+                check_row = true;
+                if(A[i][j] > sum - A[i][j]) {strict = true;} // Хотя бы один должен быть строго больше
+                indexes[j] = i;                              // j-й элемент в i-й строке - нужный -> j-ой строкой будет i-я строка
             }   
         }
-        
+        if(!check_row){return false;}
     }
     for(size_t i = 1; i<indexes.size()-1;++i){
         swap(b[i], b[indexes[i]]);

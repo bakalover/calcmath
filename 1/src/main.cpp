@@ -1,12 +1,12 @@
 #include<iostream>
 #include <vector>
-#include "../include/util.h"
+#include "../include/util.hpp"
 #include <iomanip>
 #include <fstream>
 using namespace std;
 
 int main(){
-    cout<<setprecision(15)<<fixed;
+    cout<<setprecision(30)<<fixed;
     int32_t n;
     int64_t eps;
     ifstream in;
@@ -97,7 +97,7 @@ int main(){
     cout<<"Iterations: "<<iter_count<<'\n'<<'\n'<<"Answer: "<<endl;
     for (size_t i = 1; i < x.size(); i++)
     {
-        cout<<x[i]<<endl;
+        cout<<pretty(x[i],5)<<endl;
     }
     
     return 0;
@@ -115,3 +115,4 @@ int main(){
 // 10 1 1
 // 2 10 1
 // 14 12 13
+// 2
