@@ -2,9 +2,9 @@
 #include <cmath>
 string pretty(double x, const int64_t eps)
 {
-    ostringstream strs;
+    ostringstream strs; 
     strs << fixed << setprecision(100) << x;
-    string s = strs.str(); // Просто циклом посчитать нули после этой строчки
+    string s = strs.str(); 
     string ans;
     int8_t count{};
     for (size_t i = 0; count <= 3; ++i)
@@ -12,18 +12,6 @@ string pretty(double x, const int64_t eps)
         ans += s[i];
         s[i] != '0' && i != 0 ? ++count : 0;
     }
-    /*string mantis = s.substr(0,1) + s.substr(2,eps);
-    int16_t exp = stoi(s.substr(s.size()-2,2)) - 1;
-    if (exp >= 0){
-        for (size_t i = 0; i < exp; i++)
-        {
-            mantis = "0"+mantis;
-        }
-        return "0." + mantis;
-    }
-    else{
-        return mantis.substr(0,1) + "." + mantis.substr(1, mantis.size()-1);
-    }*/
     return ans;
 }
 

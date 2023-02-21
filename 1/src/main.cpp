@@ -16,8 +16,8 @@ int main()
          << endl;
     int16_t conf;
     cin >> conf;
-    int i=1;
-    
+    int i = 1;
+
     if (conf == 2)
     {
         cout << "Enter path: ";
