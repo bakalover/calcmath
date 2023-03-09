@@ -1,6 +1,6 @@
 use plotters::prelude::*;
 pub fn draw() -> Result<(), Box<dyn std::error::Error>> {
-    let root = BitMapBackend::new("../plot/0.png", (640, 480)).into_drawing_area();
+    let root = BitMapBackend::new("../out/0.png", (640, 480)).into_drawing_area();
     root.fill(&WHITE)?;
     let mut chart = ChartBuilder::on(&root)
         .caption("y=x^2", ("sans-serif", 50).into_font())
@@ -13,7 +13,7 @@ pub fn draw() -> Result<(), Box<dyn std::error::Error>> {
 
     chart
         .draw_series(LineSeries::new(
-            (-50..=50).map(|x| x as f32 / 50.0).map(|x| (x, x * x)),
+            (-50..=50).map(|x| x as f32 / 50.0).map(|x| (x, x * x * x)),
             &RED,
         ))?
         .label("y = x^2")
