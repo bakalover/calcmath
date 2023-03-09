@@ -1,20 +1,24 @@
-use std::{
-    io::{BufRead, stdin, self}, error,
-};
-use crate::{util::*, calc::{Data, Methods, calculate}};
+use std::io::stdin;
 
-pub mod calc;
-pub mod draw;
-pub mod util;
-
+use eq::calc_util::{calculate, Data, Methods};
+use eq::console::from_console;
+use eq::file::from_file;
+use eq::func_util::{get_func_by_type, Funcs};
 fn main() {
-    /*let data = Data{
+    let data = Data {
         method: Methods::Bin,
-        func: Funcs::Poly,
-        a: -2.0,
-        b: 0.0,
+        func: get_func_by_type(&Funcs::PolySin),
+        l: 0.0,
+        r: 3.0,
+        eps: 6,
     };
-    println!("{}",calculate(&data));*/
+    match calculate(&data) {
+        Ok(out) => println!(
+            "Приближенный Корень: {}\nЧисло итераций: {}\nЗначение функции в корне: {}",
+            out.ans, out.iters, out.f
+        ),
+        Err(err) => println!("{}", err.0),
+    }
 
     println!("\nВыберете Конфигурацию: \n1 - Консоль, 2 - Файл\n");
 
@@ -23,51 +27,14 @@ fn main() {
     stdin().read_line(&mut choice).expect("IO problems");
 
     match choice.as_str().trim() {
-        "1"  => match from_console(){
-            Ok(msg) => println!("{}",msg),
+        "1" => match from_console() {
+            Ok(msg) => println!("{}", msg),
             Err(err) => println!("{}", err),
         },
-        "2"  => match from_file(){
-            Ok(msg) => println!("{}",msg),
+        "2" => match from_file() {
+            Ok(msg) => println!("{}", msg),
             Err(err) => println!("Некорректный ввод"),
         },
         _ => println!("Некорректный ввод!"),
     }
-}
-
-
-fn from_file()-> Result<String, io::Error>{
-    /*crate::draw::draw().unwrap();
-    let reader = BufReader::new(File::open("hello.txt").unwrap());
-    let mut x: Vec<i64> = reader.lines().map(|line| line.unwrap().parse::<i64>().unwrap()).collect();
-    print!("{}, {}",x[0],x[1]);
-    let a: Option<i32>;*/
-    Ok(("\nРабота завершена, проверте папку с графиком\n").to_string())
-}
-
-fn from_console() -> Result<String, Box<dyn error::Error>>{
-    let mut choice = String::new();
-
-    println!("Выберете функцию: 1, 2, 3\n");
-    println!("{}",get_func_name(Funcs::Log));
-    println!("{}",get_func_name(Funcs::Poly));
-    println!("{}\n",get_func_name(Funcs::Sin));
-
-    stdin().read_line(&mut choice).expect("IO problems");
-    
-    match choice.as_str().trim() {
-        "1" | "2" | "3" => println!("Выш выбор: {}",choice),
-        _ => println!("Некорректный ввод!"),
-    }
-    
-    println!("Введите границы:\n");
-
-    let l: f64 = stdin().lock().lines().next().expect("Lock on stdio").expect("IO problems").trim().parse()?;
-    let r: f64 = stdin().lock().lines().next().expect("Lock on stdio").expect("IO problems").trim().parse()?;
-
-    println!("\nВведите точность:\n");
-
-    let eps: i32 = stdin().lock().lines().next().expect("Lock on stdio").expect("IO problems").trim().parse()?;
-
-    Ok(("\nРабота завершена, проверте папку с графиком\n").to_string())
 }
