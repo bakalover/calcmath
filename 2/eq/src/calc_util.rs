@@ -1,6 +1,6 @@
 use crate::func_util::{get_func_by_type, Funcs};
 
-use self::bin::calculate_bin;
+use self::{bin::calculate_bin, newton::calculate_newton};
 
 pub mod bin;
 pub mod newton;
@@ -22,7 +22,7 @@ pub struct Outcome {
 }
 pub struct Data {
     pub method: Methods,
-    pub func: fn(&f64) -> f64,
+    pub func_type: Funcs,
     pub l: f64,
     pub r: f64,
     pub eps: u32,
@@ -31,7 +31,7 @@ pub struct Data {
 pub fn calculate(data: &Data) -> Result<Outcome, CustomError> {
     match data.method {
         Methods::Bin => calculate_bin(&data),
-        Methods::Newton => todo!(),
+        Methods::Newton => calculate_newton(&data),
         Methods::NewtonMulti => todo!(),
         Methods::Simpl => todo!(),
     }

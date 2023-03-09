@@ -3,7 +3,6 @@ use crate::func_util::*;
 
 pub fn calculate_bin(data: &Data) -> Result<Outcome, CustomError> {
     let roots = calculate_root_number(data);
-    let mut iters = 0;
 
     if roots > 1 || roots == 0 {
         return Err(CustomError(format!(
@@ -12,11 +11,11 @@ pub fn calculate_bin(data: &Data) -> Result<Outcome, CustomError> {
         )));
     }
 
+    let mut iters = 0;
     let mut l = data.l;
     let mut r = data.r;
     let mut res = (l + r) / 2.0;
-    let func = data.func;
-
+    let func = get_func_by_type(&data.func_type);
     res = (l + r) / 2.0;
     while func(&res).abs() > std::f64::EPSILON && (r - l) > 1.0 / ((10 as u64).pow(data.eps) as f64)
     {
@@ -28,10 +27,10 @@ pub fn calculate_bin(data: &Data) -> Result<Outcome, CustomError> {
         }
         res = (l + r) / 2.0;
     }
-    
+
     Ok(Outcome {
         ans: res,
         iters: iters,
-        f: (data.func)(&res),
+        f: func(&res),
     })
 }
