@@ -31,7 +31,7 @@ pub fn calculate_newton(data: &Data) -> Result<Outcome, CustomError> {
 fn get_start(data: &Data) -> Result<f64, ()> {
     let func = get_func_by_type(&data.func_type);
     let func_der2 = get_der2_by_type(&data.func_type);
-    for i in (data.l as i64) * 1000..(data.r as i64) * 1000 {
+    for i in ((data.l * 1000.0) as i64)..((data.r * 1000.0) as i64) {
         if (func(&((i as f64) / 1000.0)) * func_der2(&((i as f64) / 1000.0)) > 0.0) {
             return Ok((i as f64) / 1000.0);
         }

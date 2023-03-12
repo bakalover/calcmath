@@ -11,10 +11,10 @@ pub fn from_console() -> Result<String, Box<dyn error::Error>> {
     let mut choice = String::new();
 
     println!("Выберете функцию: 1, 2, 3, 4\n");
-    println!("1) {}", get_func_name(Funcs::Log));
-    println!("2) {}", get_func_name(Funcs::Poly));
-    println!("3) {}", get_func_name(Funcs::Sinh));
-    println!("4) {}", get_func_name(Funcs::PolySin));
+    println!("1) {}", get_func_name(&Funcs::Log));
+    println!("2) {}", get_func_name(&Funcs::Poly));
+    println!("3) {}", get_func_name(&Funcs::Sinh));
+    println!("4) {}", get_func_name(&Funcs::PolySin));
 
     stdin().read_line(&mut choice).expect("IO problems");
 

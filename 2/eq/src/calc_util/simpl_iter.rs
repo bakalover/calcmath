@@ -43,7 +43,7 @@ pub fn calculate_simpl_iter(data: &Data) -> Result<Outcome, CustomError> {
 fn get_lamda_part(data: &Data) -> Result<f64, ()> {
     let mut max_val: f64 = 0.0;
     let func_der1 = get_der1_by_type(&data.func_type);
-    for i in (data.l as i64) * 1000..(data.r as i64) * 1000 {
+    for i in ((data.l * 1000.0) as i64)..((data.r * 1000.0) as i64) {
         if func_der1(&((i as f64) / 1000.0)).abs() > max_val {
             max_val = func_der1(&((i as f64) / 1000.0)).abs();
         }

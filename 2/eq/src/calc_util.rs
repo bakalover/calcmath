@@ -40,7 +40,7 @@ pub fn calculate(data: &Data) -> Result<Outcome, CustomError> {
     match data.method {
         Methods::Bin => calculate_bin(&data),
         Methods::Newton => calculate_newton(&data),
-        Methods::NewtonMulti => todo!(),
         Methods::Simpl => calculate_simpl_iter(&data),
+        Methods::NewtonMulti => todo!(),
     }
 }

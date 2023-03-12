@@ -9,7 +9,7 @@ pub enum Funcs {
     PolySin,
 }
 
-pub fn get_func_name(func: Funcs) -> String {
+pub fn get_func_name(func: &Funcs) -> String {
     match func {
         Funcs::Log => String::from("ln(x) - x + x^2"),
         Funcs::Poly => String::from("-7x^5 + x^3 -1"),
@@ -18,7 +18,7 @@ pub fn get_func_name(func: Funcs) -> String {
     }
 }
 
-pub fn get_func_by_type(func: &Funcs) -> for<'a> fn(&'a f64) -> f64 {
+pub fn get_func_by_type(func: &Funcs) -> fn(&f64) -> f64 {
     match func {
         Funcs::Log => |x: &f64| -> f64 { log_func(x) },
         Funcs::Poly => |x: &f64| -> f64 { poly_func(x) },
@@ -27,7 +27,7 @@ pub fn get_func_by_type(func: &Funcs) -> for<'a> fn(&'a f64) -> f64 {
     }
 }
 
-pub fn get_der1_by_type(func: &Funcs) -> for<'a> fn(&'a f64) -> f64 {
+pub fn get_der1_by_type(func: &Funcs) -> fn(&f64) -> f64 {
     match func {
         Funcs::Log => |x: &f64| -> f64 { log_der1_func(x) },
         Funcs::Poly => |x: &f64| -> f64 { poly_der1_func(x) },
@@ -35,8 +35,8 @@ pub fn get_der1_by_type(func: &Funcs) -> for<'a> fn(&'a f64) -> f64 {
         Funcs::PolySin => |x: &f64| -> f64 { polysin_der1_func(x) },
     }
 }
-
-pub fn get_der2_by_type(func: &Funcs) -> for<'a> fn(&'a f64) -> f64 {
+//for<'a> fn(&'a f64) -> f64
+pub fn get_der2_by_type(func: &Funcs) -> fn(&f64) -> f64 {
     match func {
         Funcs::Log => |x: &f64| -> f64 { log_der2_func(x) },
         Funcs::Poly => |x: &f64| -> f64 { poly_der2_func(x) },
@@ -101,9 +101,9 @@ pub fn calculate_root_number(data: &Data) -> u32 {
         if func(&((i as f64) / 1000.0)) * func(&(((i as f64) + 1.0) / 1000.0)) < 0.0 {
             count += 1;
         }
-        if  func(&((i as f64) / 1000.0)) * func(&(((i as f64) + 1.0) / 1000.0)) == 0.0 {
+        if func(&((i as f64) / 1000.0)) * func(&(((i as f64) + 1.0) / 1000.0)) == 0.0 {
             acc_zeros += 1;
         }
     }
-    count + acc_zeros/2
+    count + acc_zeros / 2
 }

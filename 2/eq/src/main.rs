@@ -2,16 +2,22 @@ use std::io::stdin;
 
 use eq::calc_util::{calculate, Data, Methods};
 use eq::console::from_console;
+use eq::draw::draw;
 use eq::file::from_file;
 use eq::func_util::{get_func_by_type, Funcs};
 fn main() {
     let data = Data {
         method: Methods::Simpl,
         func_type: Funcs::Log,
-        l: 0.5,
-        r: 2.0,
+        l: 0.1,
+        r: 5.0,
         eps: 1.0 / ((10 as u64).pow(6) as f64),
     };
+    match draw(&data) {
+        Ok(_) => println!("Проверьте ваш график в папке out"),
+        Err(err) => println!("Невозможно построить график!"),
+    }
+
     match calculate(&data) {
         Ok(out) => println!(
             "Приближенный Корень: {}\nЧисло итераций: {}\nЗначение функции в корне: {}",
