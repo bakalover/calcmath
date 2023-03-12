@@ -6,11 +6,11 @@ use eq::file::from_file;
 use eq::func_util::{get_func_by_type, Funcs};
 fn main() {
     let data = Data {
-        method: Methods::Newton,
-        func_type: Funcs::PolySin,
-        l: 2.0,
-        r: 3.5,
-        eps: 6,
+        method: Methods::Simpl,
+        func_type: Funcs::Log,
+        l: 0.5,
+        r: 2.0,
+        eps: 1.0 / ((10 as u64).pow(6) as f64),
     };
     match calculate(&data) {
         Ok(out) => println!(

@@ -95,11 +95,15 @@ pub fn polysin_der2_func(x: &f64) -> f64 {
 
 pub fn calculate_root_number(data: &Data) -> u32 {
     let mut count: u32 = 0;
+    let mut acc_zeros: u32 = 0;
     let func = get_func_by_type(&data.func_type);
     for i in ((data.l * 1000.0) as i64)..((data.r * 1000.0) as i64) {
         if func(&((i as f64) / 1000.0)) * func(&(((i as f64) + 1.0) / 1000.0)) < 0.0 {
             count += 1;
         }
+        if  func(&((i as f64) / 1000.0)) * func(&(((i as f64) + 1.0) / 1000.0)) == 0.0 {
+            acc_zeros += 1;
+        }
     }
-    count
+    count + acc_zeros/2
 }

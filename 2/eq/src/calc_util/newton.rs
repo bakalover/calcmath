@@ -2,14 +2,6 @@ use super::{CustomError, Data, Outcome};
 use crate::func_util::*;
 
 pub fn calculate_newton(data: &Data) -> Result<Outcome, CustomError> {
-    let roots = calculate_root_number(data);
-
-    if roots > 1 || roots == 0 {
-        return Err(CustomError(format!(
-            "Найденное число корней: {} не соответствует 1!",
-            roots
-        )));
-    }
     let mut x_i;
     let mut x_i_1 = match get_start(&data) {
         Ok(numb) => numb,
@@ -23,7 +15,7 @@ pub fn calculate_newton(data: &Data) -> Result<Outcome, CustomError> {
     let func = get_func_by_type(&data.func_type);
     let func_der1 = get_der1_by_type(&data.func_type);
 
-    while func(&x_i_1).abs() > 1.0 / ((10 as u64).pow(data.eps) as f64) {
+    while func(&x_i_1).abs() > data.eps {
         iters += 1;
         x_i = x_i_1 - func(&x_i_1) / func_der1(&x_i_1);
         x_i_1 = x_i;
