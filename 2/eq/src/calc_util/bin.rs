@@ -1,12 +1,13 @@
-use super::{CustomError, Data, Outcome};
+use super::{CalcError, Data, Outcome};
 use crate::func_util::*;
 
-pub fn calculate_bin(data: &Data) -> Result<Outcome, CustomError> {
+pub fn calculate_bin(data: &Data) -> Result<Outcome, CalcError> {
     let mut iters = 0;
     let mut l = data.l;
     let mut r = data.r;
     let mut res;
     let func = get_func_by_type(&data.func_type);
+    
     res = (l + r) / 2.0;
     while func(&res).abs() > std::f64::EPSILON && (r - l) > data.eps
     {

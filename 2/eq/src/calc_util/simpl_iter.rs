@@ -2,9 +2,9 @@ use std::f64::{INFINITY, NEG_INFINITY};
 
 use crate::func_util::{get_der1_by_type, get_func_by_type};
 
-use super::{CustomError, Data, Outcome};
+use super::{CalcError, Data, Outcome};
 
-pub fn calculate_simpl_iter(data: &Data) -> Result<Outcome, CustomError> {
+pub fn calculate_simpl_iter(data: &Data) -> Result<Outcome, CalcError> {
     let lambda: f64;
     let mut x_i;
     let mut x_ip1;
@@ -13,7 +13,7 @@ pub fn calculate_simpl_iter(data: &Data) -> Result<Outcome, CustomError> {
     match get_lamda_part(data) {
         Ok(lp) => lambda = -(1.0 / lp),
         Err(_) => {
-            return Err(CustomError(format!(
+            return Err(CalcError(format!(
                 "Невозможно проверить достаточное условие сходимости!"
             )))
         }

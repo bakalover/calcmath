@@ -4,27 +4,27 @@ use eq::calc_util::{calculate, Data, Methods};
 use eq::console::from_console;
 use eq::draw::draw;
 use eq::file::from_file;
-use eq::func_util::{get_func_by_type, Funcs};
+use eq::func_util::Funcs;
 fn main() {
-    let data = Data {
-        method: Methods::Simpl,
-        func_type: Funcs::Log,
-        l: 0.1,
-        r: 5.0,
-        eps: 1.0 / ((10 as u64).pow(6) as f64),
-    };
-    match draw(&data) {
-        Ok(_) => println!("Проверьте ваш график в папке out"),
-        Err(err) => println!("Невозможно построить график!"),
-    }
+    // let data = Data {
+    //     method: Methods::Simpl,
+    //     func_type: Funcs::Log,
+    //     l: 0.1,
+    //     r: 5.0,
+    //     eps: 1.0 / ((10 as u64).pow(6) as f64),
+    // };
+    // match draw(&data) {
+    //     Ok(_) => println!("Проверьте ваш график в папке out"),
+    //     Err(_) => println!("Невозможно построить график!"),
+    // }
 
-    match calculate(&data) {
-        Ok(out) => println!(
-            "Приближенный Корень: {}\nЧисло итераций: {}\nЗначение функции в корне: {}",
-            out.ans, out.iters, out.f
-        ),
-        Err(err) => println!("{}", err.0),
-    }
+    // match calculate(&data) {
+    //     Ok(out) => println!(
+    //         "Приближенный Корень: {}\nЧисло итераций: {}\nЗначение функции в корне: {}",
+    //         out.ans, out.iters, out.f
+    //     ),
+    //     Err(err) => println!("{}", err.0),
+    // }
 
     println!("\nВыберете Конфигурацию: \n1 - Консоль, 2 - Файл\n");
 
@@ -33,14 +33,17 @@ fn main() {
     stdin().read_line(&mut choice).expect("IO problems");
 
     match choice.as_str().trim() {
+
         "1" => match from_console() {
-            Ok(msg) => println!("{}", msg),
-            Err(err) => println!("{}", err),
+            Ok(msg) => println!("Корректное завершение работы:\n{}", msg),
+            Err(msg) => println!("Некорректное завершение работы:\n{}",msg.0),
         },
+
         "2" => match from_file() {
             Ok(msg) => println!("{}", msg),
-            Err(err) => println!("Некорректный ввод"),
+             Err(_) => println!("Некорректное завершение работы"),
         },
+
         _ => println!("Некорректный ввод!"),
     }
 }

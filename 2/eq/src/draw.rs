@@ -1,5 +1,5 @@
 use core::fmt;
-use std::{f64::{NEG_INFINITY, INFINITY}, error};
+use std::{f64::{NEG_INFINITY, INFINITY}};
 
 use plotters::prelude::*;
 

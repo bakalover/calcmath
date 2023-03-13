@@ -1,4 +1,4 @@
-use crate::func_util::{get_func_by_type, Funcs, calculate_root_number};
+use crate::func_util::{Funcs, calculate_root_number};
 
 use self::{bin::calculate_bin, newton::calculate_newton, simpl_iter::calculate_simpl_iter};
 
@@ -13,7 +13,7 @@ pub enum Methods {
     Simpl,
 }
 
-pub struct CustomError(pub String);
+pub struct CalcError(pub String);
 
 pub struct Outcome {
     pub ans: f64,
@@ -28,11 +28,11 @@ pub struct Data {
     pub eps: f64,
 }
 
-pub fn calculate(data: &Data) -> Result<Outcome, CustomError> {
+pub fn calculate(data: &Data) -> Result<Outcome, CalcError> {
     let roots = calculate_root_number(data);
 
     if roots > 1 || roots == 0 {
-        return Err(CustomError(format!(
+        return Err(CalcError(format!(
             "Найденное число корней: {} не соответствует 1!",
             roots
         )));

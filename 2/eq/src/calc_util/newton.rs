@@ -1,12 +1,12 @@
-use super::{CustomError, Data, Outcome};
+use super::{CalcError, Data, Outcome};
 use crate::func_util::*;
 
-pub fn calculate_newton(data: &Data) -> Result<Outcome, CustomError> {
+pub fn calculate_newton(data: &Data) -> Result<Outcome, CalcError> {
     let mut x_i;
     let mut x_i_1 = match get_start(&data) {
         Ok(numb) => numb,
         Err(_) => {
-            return Err(CustomError(format!(
+            return Err(CalcError(format!(
                 "Невозможно проверить достаточное условие сходимости!"
             )))
         }
