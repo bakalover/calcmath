@@ -35,13 +35,13 @@ fn main() {
     match choice.as_str().trim() {
 
         "1" => match from_console() {
-            Ok(msg) => println!("Корректное завершение работы:\n{}", msg),
+            Ok(()) => println!("Корректное завершение работы.",),
             Err(msg) => println!("Некорректное завершение работы:\n{}",msg.0),
         },
 
         "2" => match from_file() {
-            Ok(msg) => println!("{}", msg),
-             Err(_) => println!("Некорректное завершение работы"),
+            Ok(()) => println!("Корректное завершение работы."),
+             Err(msg) => println!("Некорректное завершение работы:\n{}",msg.0),
         },
 
         _ => println!("Некорректный ввод!"),

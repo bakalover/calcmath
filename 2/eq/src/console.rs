@@ -4,11 +4,15 @@ use std::{
     io::{stdin, BufRead},
 };
 
-use crate::{func_util::*, calc_util::{Data, Methods, calculate}, draw::draw};
+use crate::{
+    calc_util::{calculate, Data, Methods},
+    draw::draw,
+    func_util::*,
+};
 
 pub struct RuntimeError(pub String);
 
-pub fn from_console() -> Result<String, RuntimeError> {
+pub fn from_console() -> Result<(), RuntimeError> {
     let mut choice_func = String::new();
     let mut choice_method = String::new();
     let method: Methods;
@@ -23,10 +27,10 @@ pub fn from_console() -> Result<String, RuntimeError> {
     stdin().read_line(&mut choice_func);
 
     match choice_func.as_str().trim() {
-        "1"=>func_type = Funcs::Log,
-        "2"=>func_type = Funcs::Poly,
-        "3"=>func_type = Funcs::Sinh,
-        "4"=>func_type = Funcs::PolySin,
+        "1" => func_type = Funcs::Log,
+        "2" => func_type = Funcs::Poly,
+        "3" => func_type = Funcs::Sinh,
+        "4" => func_type = Funcs::PolySin,
         _ => return Err(RuntimeError("Неверная опция выбора функции!".to_string())),
     }
 
@@ -38,9 +42,9 @@ pub fn from_console() -> Result<String, RuntimeError> {
     stdin().read_line(&mut choice_method);
 
     match choice_method.as_str().trim() {
-        "1"=>method = Methods::Bin,
-        "2"=>method = Methods::Newton,
-        "3"=>method = Methods::Simpl,
+        "1" => method = Methods::Bin,
+        "2" => method = Methods::Newton,
+        "3" => method = Methods::Simpl,
         _ => return Err(RuntimeError("Неверная опция выбора метода!".to_string())),
     }
 
@@ -110,25 +114,32 @@ pub fn from_console() -> Result<String, RuntimeError> {
         Err(_) => return Err(RuntimeError("Точность - не число!".to_string())),
     }
 
-    let data = Data{
+    let data = Data {
         method: method,
         func_type: func_type,
         l: l,
         r: r,
-        eps: 1.0 / ((10 as u64).pow(eps) as f64)
+        eps: 1.0 / ((10 as u64).pow(eps) as f64),
     };
 
+    match draw(&data) {
+        Ok(_) => println!("Проверьте ваш график в папке out"),
+        Err(_) => println!("Невозможно построить график!"),
+    }
+
     match calculate(&data) {
-        Ok(out) => println!(
-            "Приближенный Корень: {}\nЧисло итераций: {}\nЗначение функции в корне: {}",
-            out.ans, out.iters, out.f
-        ),
+        Ok(out) => {
+            println!(
+                "Приближенный Корень: {}\nЧисло итераций: {}\nЗначение функции в корне: {}",
+                out.ans, out.iters, out.f
+            );
+            return Ok(());
+        }
         Err(err) => return Err(RuntimeError(err.0)),
     }
 
-    match draw(&data) {
-        Ok(_) => return Ok("Проверьте ваш график в папке out".to_string()),
-        Err(_) => return Err(RuntimeError("Невозможно построить график!".to_string())),
-    }
-
+    // match draw(&data) {
+    //     Ok(_) => return Ok("Проверьте ваш график в папке out".to_string()),
+    //     Err(_) => return Err(RuntimeError("Невозможно построить график!".to_string())),
+    // }
 }

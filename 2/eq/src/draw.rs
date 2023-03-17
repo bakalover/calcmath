@@ -10,7 +10,7 @@ use crate::{
 pub fn draw(data: &Data) -> Result<(), Box<dyn std::error::Error>> {
     let f_max = get_max(data)?;
     let f_min = get_min(data)?;
-    let root = BitMapBackend::new("/home/bakalover/code/calcmath/2/eq/out/0.png", (640, 480))
+    let root = BitMapBackend::new("/home/bakalover/code/calcmath/2/eq/out/graph.png", (640, 480))
         .into_drawing_area();
     root.fill(&WHITE)?;
     let mut chart = ChartBuilder::on(&root)
