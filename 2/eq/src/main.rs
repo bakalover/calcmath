@@ -1,10 +1,13 @@
 use std::io::stdin;
 
+use eq::calc_util::newton::calculate_newton;
+use eq::calc_util::newton_multi::calculate_newton_multi;
 use eq::calc_util::{calculate, Data, Methods};
 use eq::console::from_console;
 use eq::draw::draw;
 use eq::file::from_file;
 use eq::func_util::Funcs;
+use eq::multi::multi;
 fn main() {
     // let data = Data {
     //     method: Methods::Simpl,
@@ -26,22 +29,27 @@ fn main() {
     //     Err(err) => println!("{}", err.0),
     // }
 
-    println!("\nВыберете Конфигурацию: \n1 - Консоль, 2 - Файл\n");
+
+    println!("\nВыберете Конфигурацию: \n1 - Консоль\n2 - Файл\n3 - Системы");
 
     let mut choice = String::new();
 
     stdin().read_line(&mut choice).expect("IO problems");
 
     match choice.as_str().trim() {
-
         "1" => match from_console() {
             Ok(()) => println!("Корректное завершение работы.",),
-            Err(msg) => println!("Некорректное завершение работы:\n{}",msg.0),
+            Err(msg) => println!("Некорректное завершение работы:\n{}", msg.0),
         },
 
         "2" => match from_file() {
             Ok(()) => println!("Корректное завершение работы."),
-             Err(msg) => println!("Некорректное завершение работы:\n{}",msg.0),
+            Err(msg) => println!("Некорректное завершение работы:\n{}", msg.0),
+        },
+
+        "3" => match multi() {
+            Ok(()) => println!("Корректное завершение работы."),
+            Err(msg) => println!("Некорректное завершение работы:\n{}", msg.0),
         },
 
         _ => println!("Некорректный ввод!"),

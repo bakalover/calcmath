@@ -1,3 +1,5 @@
+use std::{f64::NEG_INFINITY, f64::INFINITY};
+
 use super::{CalcError, Data, Outcome};
 use crate::func_util::*;
 
@@ -32,7 +34,7 @@ fn get_start(data: &Data) -> Result<f64, ()> {
     let func = get_func_by_type(&data.func_type);
     let func_der2 = get_der2_by_type(&data.func_type);
     for i in ((data.l * 1000.0) as i64)..((data.r * 1000.0) as i64) {
-        if (func(&((i as f64) / 1000.0)) * func_der2(&((i as f64) / 1000.0)) > 0.0) {
+        if func(&((i as f64) / 1000.0)) * func_der2(&((i as f64) / 1000.0))  > 0.0 && func(&((i as f64) / 1000.0)) > NEG_INFINITY && func(&((i as f64) / 1000.0)) < INFINITY{
             return Ok((i as f64) / 1000.0);
         }
     }

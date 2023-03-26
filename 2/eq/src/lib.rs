@@ -3,3 +3,4 @@ pub mod console;
 pub mod draw;
 pub mod file;
 pub mod func_util;
+pub mod multi;
