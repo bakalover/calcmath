@@ -1,6 +1,6 @@
 use std::io::stdin;
 
-use crate::{calc_util::newton_multi::calculate_newton_multi, draw::draw_multi};
+use crate::{calc_util::newton_multi::calculate_newton_multi};
 
 pub struct MultiRuntimeError(pub String);
 

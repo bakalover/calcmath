@@ -7,10 +7,9 @@ pub fn calculate_bin(data: &Data) -> Result<Outcome, CalcError> {
     let mut r = data.r;
     let mut res;
     let func = get_func_by_type(&data.func_type);
-    
+
     res = (l + r) / 2.0;
-    while func(&res).abs() > std::f64::EPSILON && (r - l) > data.eps
-    {
+    while func(&res).abs() > std::f64::EPSILON && (r - l) > data.eps {
         iters += 1;
         if func(&res) * func(&r) < 0.0 {
             l = res;

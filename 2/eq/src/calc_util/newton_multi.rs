@@ -9,7 +9,11 @@ pub fn calculate_newton_multi(x: f64, y: f64, eps: u32, sys_type: i32) {
     let mut dy: f64 = 1000000.0;
     match sys_type {
         1 => {
-            while dx.abs() > epsf || dy.abs() > epsf || ((x - y).sin()).abs() > epsf  || ((x + y).cos()).abs() > epsf{
+            while dx.abs() > epsf
+                || dy.abs() > epsf
+                || ((x - y).sin()).abs() > epsf
+                || ((x + y).cos()).abs() > epsf
+            {
                 iter += 1;
                 dy = ((x - y).sin() * (x + y).sin() + (x + y).cos() * (x - y).cos())
                     / ((x - y).cos() + (x - y).cos() * (x + y).sin());
@@ -35,8 +39,12 @@ pub fn calculate_newton_multi(x: f64, y: f64, eps: u32, sys_type: i32) {
         _ => println!("problems"),
     }
     println!("Число итераций: {}\n", iter);
-    println!("\nПолученный вектор: \nx: {} \ny: {}\n", x,y);
-    println!("\nПолученный вектор погрешностей: \nx: {} \ny: {}\n", dx.abs(),dy.abs());
+    println!("\nПолученный вектор: \nx: {} \ny: {}\n", x, y);
+    println!(
+        "\nПолученный вектор погрешностей: \nx: {} \ny: {}\n",
+        dx.abs(),
+        dy.abs()
+    );
     match draw_multi(x, y, sys_type) {
         Ok(_) => println!("Проверьте ваш график в папке out"),
         Err(_) => println!("Невозможно построить график!"),

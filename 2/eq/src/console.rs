@@ -1,8 +1,4 @@
-use std::{
-    error,
-    fmt::Error,
-    io::{stdin, BufRead},
-};
+use std::io::stdin;
 
 use crate::{
     calc_util::{calculate, Data, Methods},
