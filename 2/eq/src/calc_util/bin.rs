@@ -18,10 +18,11 @@ pub fn calculate_bin(data: &Data) -> Result<Outcome, CalcError> {
         }
         res = (l + r) / 2.0;
     }
-
     Ok(Outcome {
         ans: res,
         iters: iters,
         f: func(&res),
     })
 }
+
+
