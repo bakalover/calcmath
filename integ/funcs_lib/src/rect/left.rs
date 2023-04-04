@@ -1,10 +1,12 @@
-use crate::{CalcErr, Req};
-pub fn left_c(req: &Req) -> Result<f32, CalcErr> {
-    let (mut ans, dx) = (0.0, (req.r - req.l) / (req.n as f32));
+use crate::Req;
+pub fn left_c(req: &Req) -> f64 {
+    let (mut ans, dx) = (0.0, (req.r - req.l) / (req.n as f64));
+    let mut x_i = req.l;
 
-    for i in ((req.l * (req.n as f32)) as u32)..((req.r * (req.n as f32)) as u32) {
-        ans += (req.f)((i as f32) / (req.n as f32)) * dx;
+    while x_i < req.r {
+        ans += (req.f)(x_i) * dx;
+        x_i += dx;
     }
 
-    Ok(ans)
+    ans
 }

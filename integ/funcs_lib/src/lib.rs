@@ -1,27 +1,43 @@
+pub mod funcs;
 pub mod rect;
-pub mod trap;
 pub mod simp;
+pub mod trap;
 
-pub use self::rect::left::left_c;
-pub use self::rect::center::center_c;
-pub use self::rect::right::right_c;
+use rect::{center::center_c, left::left_c, right::right_c};
+use simp::simp_c;
+use trap::trap_c;
+
+pub use self::funcs::*;
 
 #[cfg(test)]
 mod tests {
     use super::*;
 
     #[test]
-    fn it_works() {
-        
+    fn it_works() {}
+}
+
+pub fn eval(req: &Req, opt: &Methods) -> f64 {
+    match opt {
+        Methods::Left => left_c(req),
+        Methods::Right => right_c(req),
+        Methods::Center => center_c(req),
+        Methods::Trap => trap_c(req),
+        Methods::Simp => simp_c(req),
     }
 }
 
-pub struct CalcErr(String);
 pub struct Req {
-    pub l: f32,
-    pub r: f32,
-    pub n: u32,
-    pub eps: f32,
-    pub f: fn(f32) -> f32,
+    pub l: f64,
+    pub r: f64,
+    pub n: u64,
+    pub f: fn(f64) -> f64,
 }
 
+pub enum Methods {
+    Left,
+    Right,
+    Center,
+    Trap,
+    Simp,
+}
