@@ -8,7 +8,6 @@ fn main() {
     let mut req: Req;
     let mut f;
 
-
     println!("\nВыберити функцию:");
     println!("A: 5e^x + sin(x)");
     println!("B: x^3 + 12x^2 + 1");
@@ -27,11 +26,10 @@ fn main() {
         "C" => f = get_func(Funcs::C),
         "D" => f = get_func(Funcs::D),
         _ => {
-            println!("Некорректный выбор!");    
+            println!("Некорректный выбор!");
             return;
         }
     }
-
 
     println!("\nМетод:");
     println!("A: Левые прямоугольники");
@@ -61,7 +59,7 @@ fn main() {
     println!("\nВведите интервал через пробел:");
     print!("l r: ");
     stdout().flush();
-    
+
     let bounds: Result<Vec<f64>, _> = stdin()
         .lines()
         .next()
@@ -88,7 +86,7 @@ fn main() {
 
     print!("\nВведите число знаков точности: ");
     stdout().flush();
-    
+
     let epsr: Result<f64, _> = stdin()
         .lines()
         .next()
