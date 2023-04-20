@@ -9,14 +9,6 @@ use trap::trap_c;
 
 pub use self::funcs::*;
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {}
-}
-
 pub fn eval(req: &Req, opt: &Methods) -> f64 {
     match opt {
         Methods::Left => left_c(req),

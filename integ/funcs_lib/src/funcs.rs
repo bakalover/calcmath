@@ -7,7 +7,7 @@ pub enum Funcs {
     D,
 }
 
-pub fn get_func(opt: Funcs) -> (fn(f64) -> f64) {
+pub fn get_func(opt: Funcs) -> fn(f64) -> f64 {
     match opt {
         Funcs::A => |x| -> f64 { 5.0 * E.powf(x) + x.sin() },
         Funcs::B => |x| -> f64 { x.powf(3.0) + 12.0 * x.powf(2.0) + 1.0 },
