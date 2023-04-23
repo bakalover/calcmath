@@ -1,7 +1,4 @@
-use std::{
-    f32::consts::E,
-    io::{stdin, stdout, Write},
-};
+use std::{f32::consts::E, io::stdin};
 
 use funcs::{
     exp, log,
@@ -46,7 +43,7 @@ fn main() {
 
     println!("\nВведите точки в формате: x y");
 
-    for i in 0..N {
+    for _i in 0..N {
         let pt: Result<Vec<f32>, _> = stdin()
             .lines()
             .next()

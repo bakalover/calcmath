@@ -9,4 +9,4 @@ pub use step::step;
 pub use exp::exp;
 pub use log::log;
 
-pub struct CalcError(String);
+pub struct CalcError(pub String);
