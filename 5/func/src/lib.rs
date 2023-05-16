@@ -1,5 +1,6 @@
 pub mod lagr;
 pub mod newton;
+pub mod validation;
 
 mod matrix;
 use matrix::MT;

@@ -5,7 +5,6 @@ pub struct Lagr {
 
 impl Lagr {
     pub fn new(x_arr: Vec<f32>, y_arr: Vec<f32>) -> Self {
-        assert_eq!(x_arr.len(), x_arr.len());
         Lagr {
             x_arr: x_arr,
             y_arr: y_arr,
