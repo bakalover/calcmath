@@ -1,8 +1,8 @@
 use crate::matrix::{self, MT};
 
 pub struct Newton {
-    MT: matrix::MT<f32>,
-    X: Vec<f32>,
+    mt: matrix::MT<f32>,
+    x_arr: Vec<f32>,
 }
 
 pub fn fact(n: usize) -> f32 {
@@ -14,14 +14,14 @@ pub fn fact(n: usize) -> f32 {
 }
 
 impl Newton {
-    pub fn new(MT: MT<f32>, X: Vec<f32>) -> Self {
-        Newton { MT: MT, X: X }
+    pub fn new(mt: MT<f32>, x_arr: Vec<f32>) -> Self {
+        Newton { mt: mt, x_arr: x_arr }
     }
     pub fn eval(&self, x: f32) -> f32 {
-        let mut t = (x - self.X[0]) / (self.X[1] - self.X[0]);
+        let t = (x - self.x_arr[0]) / (self.x_arr[1] - self.x_arr[0]);
         let mut ans: f32 = 0.0;
-        for i in 0..self.X.len() {
-            let mut prod = self.MT[0][i];
+        for i in 0..self.x_arr.len() {
+            let mut prod = self.mt[0][i];
             for j in 0..i {
                 prod *= t - j as f32;
             }

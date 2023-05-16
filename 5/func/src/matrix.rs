@@ -4,10 +4,10 @@ pub struct MT<T> {
 
 impl MT<f32> {
     pub fn new(row: usize, col: usize) -> Self {
-        let mut M = MT {
+        let m = MT {
             data: vec![vec![0.0; col]; row],
         };
-        M
+        m
     }
     pub fn get_data(&self) -> &Vec<Vec<f32>> {
         &self.data
