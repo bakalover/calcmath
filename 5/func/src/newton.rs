@@ -37,7 +37,7 @@ impl Newton {
         let mut ans: f32 = 0.0;
 
         for i in 0..self.x_arr.len() - 1 {
-            if self.x_arr[i] < x && self.x_arr[i + 1] > x {
+            if self.x_arr[i] < x && self.x_arr[i + 1] >= x {
                 t = (x - self.x_arr[i]) / h;
                 id = i;
                 break;
