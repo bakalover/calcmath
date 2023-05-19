@@ -11,6 +11,17 @@ pub fn check_size(x_arr: &[f32], y_arr: &[f32]) -> Result<(), ()> {
     Ok(())
 }
 
+pub fn check_eq_args(args: &[f32]) -> bool {
+    let mut unique = Vec::<f32>::new();
+    for el in args.iter() {
+        match unique.iter().find(|&x| x == el) {
+            None => unique.push(*el),
+            Some(_) => (),
+        }
+    }
+    unique.len() == args.len()
+}
+
 pub fn check_equal_steps(x_arr: &[f32]) -> Result<(), ()> {
     let h = x_arr[1] - x_arr[0];
     for i in 2..x_arr.len() - 1 {

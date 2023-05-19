@@ -1,69 +1,28 @@
-use std::io::{stdin, stdout, Write};
+use std::{
+    fs::File,
+    io::{BufRead, BufReader},
+};
 
 use draw::draw;
-use func::{check_eq_args, check_equal_steps, check_size, finite_mt, lagr::Lagr, newton::Newton};
-pub fn console() {
-    println!("Введите число точек N >= 2");
-    let pts_numb: usize;
-    let pts_numb_res: Result<usize, _> = stdin()
-        .lines()
-        .next()
-        .expect("End of input has been detected!")
-        .expect("Problems while reading string")
-        .parse();
+use func::{lagr::Lagr, newton::Newton, *};
 
-    match pts_numb_res {
-        Err(_) => {
-            println!("Число точек - не число!");
-            return;
-        }
-        Ok(res) => pts_numb = res,
-    }
-    if pts_numb <= 1 {
-        println!("Недостаточно точек для корректной интерполяции!");
-        return;
-    }
-
-    let mut pts: Vec<(f32, f32)> = Vec::new();
-
-    println!("\nВведите точки в формате: x y");
-
-    for _i in 0..pts_numb {
-        let pt: Result<Vec<f32>, _> = stdin()
-            .lines()
-            .next()
-            .expect("End of input has been detected!")
-            .expect("Problems while reading string")
-            .split(" ")
-            .map(|s| -> Result<f32, _> { s.to_string().parse() })
+pub fn file() {
+    let file = File::open("test.txt").unwrap();
+    let reader = BufReader::new(file);
+    let mut pts = Vec::<(f32, f32)>::new();
+    let mut x = 0.0;
+    for line in reader.lines() {
+        let pt: Vec<f32> = line
+            .unwrap()
+            .split(' ')
+            .map(|s| s.trim().parse().unwrap())
             .collect();
-
-        match pt {
-            Err(_) => {
-                println!("Одна или две координаты - не числа!");
-                return;
-            }
-            Ok(res) => {
-                if res.len() != 2 {
-                    println!("У нас двухмерное измерение!");
-                    return;
-                }
-                pts.push((res[0], res[1]));
-            }
+        if pt.len() >= 2 {
+            pts.push((pt[0], pt[1]));
+        } else {
+            x = pt[0];
         }
     }
-
-    print!("Введите аргумент: ");
-    stdout().flush().unwrap();
-    let x = stdin()
-        .lines()
-        .next()
-        .expect("End of input has been detected!")
-        .expect("Problems while reading string")
-        .parse()
-        .unwrap();
-    println!("");
-
     pts.sort_by(|(a, _), (c, _)| a.partial_cmp(c).unwrap());
 
     let (x_args, y_args): (Vec<f32>, Vec<f32>) = pts.iter().cloned().unzip();

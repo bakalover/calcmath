@@ -5,16 +5,16 @@ pub fn draw<F: Fn(f32) -> f32>(
     f: F,
     path: String,
 ) -> Result<(), Box<dyn std::error::Error>> {
-    let (X, Y): (Vec<f32>, Vec<f32>) = pts.iter().cloned().unzip();
+    let (x_args, y_args): (Vec<f32>, Vec<f32>) = pts.iter().cloned().unzip();
 
     let borders: ((f32, f32), (f32, f32)) = (
         (
-            X.iter().fold(f32::INFINITY, |a, &b| a.min(b)),
-            X.iter().fold(f32::NEG_INFINITY, |a, &b| a.max(b)),
+            x_args.iter().fold(f32::INFINITY, |a, &b| a.min(b)),
+            x_args.iter().fold(f32::NEG_INFINITY, |a, &b| a.max(b)),
         ),
         (
-            Y.iter().fold(f32::INFINITY, |a, &b| a.min(b)),
-            Y.iter().fold(f32::NEG_INFINITY, |a, &b| a.max(b)),
+            y_args.iter().fold(f32::INFINITY, |a, &b| a.min(b)),
+            y_args.iter().fold(f32::NEG_INFINITY, |a, &b| a.max(b)),
         ),
     );
 
