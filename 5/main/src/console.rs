@@ -106,7 +106,7 @@ pub fn console() {
     println!("\nМатрица конечных разностей: ");
     for i in 0..mt.get_data().len() {
         for j in 0..mt[i].len() {
-            print!("|{:>6}| ", mt[i][j]);
+            print!("|{:>10.3}| ", mt[i][j]);
         }
         println!("");
     }

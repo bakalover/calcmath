@@ -5,6 +5,7 @@ pub struct Lagr {
 
 impl Lagr {
     pub fn new(x_arr: Vec<f32>, y_arr: Vec<f32>) -> Self {
+
         Lagr {
             x_arr: x_arr,
             y_arr: y_arr,

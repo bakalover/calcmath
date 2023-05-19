@@ -34,7 +34,7 @@ fn main() {
     match conf {
         1 => console(),
         2 => file(),
-        3 => todo!(),
+        3 => alrd(),
         _ => {
             println!("Неверная конфигурация!");
             return;

@@ -25,7 +25,7 @@ pub fn check_eq_args(args: &[f32]) -> bool {
 pub fn check_equal_steps(x_arr: &[f32]) -> Result<(), ()> {
     let h = x_arr[1] - x_arr[0];
     for i in 2..x_arr.len() - 1 {
-        if x_arr[i] - x_arr[i - 1] != h {
+        if (x_arr[i] - x_arr[i - 1] - h) > 0.01 {
             return Err(());
         }
     }
