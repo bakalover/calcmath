@@ -1,7 +1,7 @@
 use std::io::{stdin, stdout, Write};
 
 use draw::draw;
-use func::{check_eq_args, check_equal_steps, check_size, finite_mt, lagr::Lagr, newton::Newton};
+use func::{check_eq_args, check_equal_steps, check_size, finite_mt, lagr::Lagr, newton::Newton, gauss::Gauss};
 
 pub fn alrd() {
     println!("Выберите функцию: ");
@@ -139,9 +139,15 @@ pub fn alrd() {
         }
         println!("");
     }
-    let newton = Newton::new(mt, x_args);
+    let newton = Newton::new(mt.clone(), x_args.clone());
 
     draw(&pts, |x| newton.eval(x), "out/newton.png".to_string()).unwrap();
     println!("Интерполяция по Ньютону построена\n-> Проверьте папку с графиком");
     println!("Значение функции: {}", newton.eval(x));
+
+     let gauss = Gauss::new(mt.clone(), x_args.clone());
+
+    draw(&pts, |x| gauss.eval_stir(x), "out/gauss.png".to_string()).unwrap();
+    println!("Интерполяция по  Стирлингу построена\n-> Проверьте папку с графиком");
+    println!("Значение функции: {}", gauss.eval_stir(x));
 }

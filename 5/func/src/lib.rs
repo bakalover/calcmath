@@ -2,6 +2,7 @@ pub mod lagr;
 pub mod matrix;
 pub mod newton;
 pub mod validation;
+pub mod gauss;
 
 pub use matrix::MT;
 pub use validation::*;

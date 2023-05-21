@@ -18,7 +18,7 @@ pub fn draw<F: Fn(f32) -> f32>(
         ),
     );
 
-    let root = BitMapBackend::new(&path, (1280, 720)).into_drawing_area();
+    let root = BitMapBackend::new(&path, (1920, 1080)).into_drawing_area();
     root.fill(&WHITE)?;
     let mut chart = ChartBuilder::on(&root)
         .margin(5)

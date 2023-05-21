@@ -4,7 +4,7 @@ use std::{
 };
 
 use draw::draw;
-use func::{lagr::Lagr, newton::Newton, *};
+use func::{gauss::Gauss, lagr::Lagr, newton::Newton, *};
 
 pub fn file() {
     let file = File::open("test.txt").unwrap();
@@ -69,9 +69,15 @@ pub fn file() {
         }
         println!("");
     }
-    let newton = Newton::new(mt, x_args);
+    let newton = Newton::new(mt.clone(), x_args.clone());
 
     draw(&pts, |x| newton.eval(x), "out/newton.png".to_string()).unwrap();
     println!("Интерполяция по Ньютону построена\n-> Проверьте папку с графиком");
     println!("Значение функции: {}", newton.eval(x));
+
+    let gauss = Gauss::new(mt.clone(), x_args.clone());
+
+    draw(&pts, |x| gauss.eval_stir(x), "out/gauss.png".to_string()).unwrap();
+    println!("Интерполяция по  Стирлингу построена\n-> Проверьте папку с графиком");
+    println!("Значение функции: {}", gauss.eval_stir(x));
 }
