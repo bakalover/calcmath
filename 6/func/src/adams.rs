@@ -6,12 +6,12 @@ pub fn eval<F: Fn(f64, f64) -> f64>(
     h: f64,
     f: F,
     eps: f64,
-) -> Vec<(f64, f64)> {
-    let mut full_ans = Vec::<(f64, f64)>::new();
+) -> Vec<(f32, f32)> {
+    let mut full_ans = Vec::<(f32, f32)>::new();
     let mut ans_h: f64 = y_0;
     let mut ans_h_2: f64 = y_0;
     let mut x_i: f64 = bord.0 + 3.0 * h;
-    full_ans.push((bord.0, y_0));
+    full_ans.push((bord.0 as f32, y_0 as f32));
 
     if (bord.1 - bord.0) / h < 3.0 {
         return full_ans;
@@ -23,8 +23,8 @@ pub fn eval<F: Fn(f64, f64) -> f64>(
     let mut f_i_2 = f_i_3 + h * f(bord.0, f_i_3);
     let mut f_i_1 = f_i_2 + h * f(bord.0 + h, f_i_2);
     let mut f_i = f_i_1 + h * f(bord.0 + h + h, f_i_1);
-    full_ans.push((bord.0 + h, f_i_2));
-    full_ans.push((bord.0 + h + h, f_i_1));
+    full_ans.push(((bord.0 + h) as f32, f_i_2 as f32));
+    full_ans.push(((bord.0 + h + h) as f32, f_i_1 as f32));
 
     while x_i < bord.1 {
         d1 = f_i - f_i_1;
@@ -40,7 +40,7 @@ pub fn eval<F: Fn(f64, f64) -> f64>(
         f_i_2 = f_i_1;
         f_i_1 = f_i;
         f_i = f(x_i, ans_h);
-        full_ans.push((x_i, ans_h));
+        full_ans.push((x_i as f32, ans_h as f32));
     }
 
     f_i_3 = y_0;

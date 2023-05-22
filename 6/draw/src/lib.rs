@@ -43,9 +43,8 @@ pub fn draw<F: Fn(f32) -> f32>(
         5,
         ShapeStyle::from(&BLUE).filled(),
         &|coord, size, style| {
-            EmptyElement::at(coord)
-                + Circle::new((0, 0), size, style)
-                + Text::new(format!("{:?}", coord), (0, 15), ("sans-serif", 18))
+            EmptyElement::at(coord) + Circle::new((0, 0), size, style)
+            // + Text::new(format!("{:?}", coord), (0, 15), ("sans-serif", 18))
         },
     ))?;
 

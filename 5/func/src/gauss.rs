@@ -48,7 +48,7 @@ impl Gauss {
             x_arr: x_arr,
         }
     }
-
+    
     pub fn eval_stir(&self, x: f32) -> f32 {
         (self.eval_first(x) + self.eval_second(x)) / 2.0
     }

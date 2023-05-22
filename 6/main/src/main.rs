@@ -9,6 +9,7 @@ fn main() {
     println!("-> 2) y` = x * y"); // e^(x^2/2)
     println!("-> 3) y` = x / y"); //sqrt(c + x^2)
     let f: fn(f32) -> f32;
+    let f_base: fn(f64, f64) -> f64;
 
     let func_choice: usize;
     let func_choice_re: Result<usize, _> = stdin()
@@ -27,9 +28,18 @@ fn main() {
     }
 
     match func_choice {
-        1 => f = |x| x.exp() - x - 1.0,
-        2 => f = |x| (x.powi(2) / 2.0).exp(),
-        3 => f = |x| (1.0 + x).sqrt(),
+        1 => {
+            f = |x| x.exp() - x - 1.0;
+            f_base = |x, y| x + y;
+        }
+        2 => {
+            f = |x| (x.powi(2) / 2.0).exp();
+            f_base = |x, y| x * y;
+        }
+        3 => {
+            f = |x| (1.0 + x).sqrt();
+            f_base = |x, y| x / y;
+        }
         _ => {
             println!("Неверная опция выбора функции!");
             return;
@@ -90,10 +100,44 @@ fn main() {
         Ok(res) => res,
     };
 
+    println!("Выберите метод: ");
+    println!("-> 1) Супер-Эйлер"); //e^x - x - 1
+    println!("-> 2) Рунге-Кутта 4-й степени"); // e^(x^2/2)
+    println!("-> 3) Адамса"); //sqrt(c + x^2)
+
+    let method_choice = match stdin().lines().next().unwrap().unwrap().parse::<usize>() {
+        Err(_) => {
+            println!("Опция метода - не число!");
+            return;
+        }
+        Ok(res) => res,
+    };
+
     let (l, r) = (borders[0], borders[1]);
-    draw(
-        &super_euler::eval((l as f64, r as f64), y_0, h, |x, y| x + y, eps),
-        f,
-        "out/eu.png".to_string(),
-    );
+
+    match method_choice {
+        1 => draw(
+            &super_euler::eval((l as f64, r as f64), y_0, h, f_base, eps),
+            f,
+            "out/eu.png".to_string(),
+        )
+        .unwrap(),
+        2 => draw(
+            &runge::eval((l as f64, r as f64), y_0, h, f_base, eps),
+            f,
+            "out/rung.png".to_string(),
+        )
+        .unwrap(),
+        3 => draw(
+            &adams::eval((l as f64, r as f64), y_0, h, f_base, eps),
+            f,
+            "out/adm.png".to_string(),
+        )
+        .unwrap(),
+        _ => {
+            println!("Неверная опция выбора метотда!");
+            return;
+        }
+    }
+    println!("Приближённое решение построено \n->Проверьте папку с графиком");
 }
